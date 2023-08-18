@@ -1,7 +1,7 @@
 /**
  * 1Password Duplicate Remover
  * 
- * Usage: node op-remove-duplicates.js
+ * Usage: node 1password-duplicate.js
  * 
  * Author: Will Hackett
  * 
@@ -13,8 +13,8 @@
  * 
  */
 
-// Set this to FALSE to perform actual deletions
-const DRY_RUN = TRUE;
+// Set this to false to perform actual deletions
+const DRY_RUN = true;
 
 const { execSync } = require('child_process');
 
@@ -79,7 +79,7 @@ Object.keys(duplicates).forEach((key) => {
 
       if (isDuplicate) {
         console.log(`Deleting duplicate item ${itemsToMerge[i].id}`);
-        if (DRY_RUN === FALSE) {
+        if (DRY_RUN === false) {
           execSync(`op delete item ${itemsToMerge[i].id}`);
         }
       } else {
