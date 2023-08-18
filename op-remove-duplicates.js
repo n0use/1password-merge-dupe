@@ -1,7 +1,7 @@
 /**
  * 1Password Duplicate Remover
  * 
- * Usage: node 1password-duplicate.js
+ * Usage: node op-remove-duplicates.js
  * 
  * Author: Will Hackett
  * 
