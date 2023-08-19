@@ -80,7 +80,7 @@ Object.keys(duplicates).forEach((key) => {
       if (isDuplicate) {
         console.log(`Deleting duplicate item ${itemsToMerge[i].id}`);
         if (DRY_RUN === false) {
-          execSync(`op delete item ${itemsToMerge[i].id}`);
+          execSync(`op item delete ${itemsToMerge[i].id}`);
         }
       } else {
         mergedItems.push(itemsToMerge[i]);
