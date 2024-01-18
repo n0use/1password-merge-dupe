@@ -18,7 +18,7 @@ const DRY_RUN = true;
 
 const { execSync } = require('child_process');
 
-const itemsJson = execSync('op items list --format=json').toString();
+const itemsJson = execSync('op items list --format=json', { maxBuffer: 5242880 }).toString();
 const items = JSON.parse(itemsJson);
 
 const duplicates = {};
@@ -32,10 +32,9 @@ items.forEach((item) => {
 });
 
 const mergeItems = (item1, item2) => {
-  if (item1.fields.length !== item2.fields.length || item1.urls.length !== item2.urls.length) {
+  if (item1.fields.length !== item2.fields.length) { 
     return false;
   }
-
   const fields1 = item1.fields.sort((a, b) => a.id.localeCompare(b.id));
   const fields2 = item2.fields.sort((a, b) => a.id.localeCompare(b.id));
 
@@ -44,7 +43,16 @@ const mergeItems = (item1, item2) => {
       return false;
     }
   }
+ 
+// the urls field is not present in all 1password entries - without this check it always bombed
 
+  if ( !('urls' in item1) || !('urls' in item2) ) {
+      return false;
+  } 
+
+  if (item1.urls.length !== item2.urls.length) {
+    return false;
+  }
   const urls1 = item1.urls.map(url => url.href).sort();
   const urls2 = item2.urls.map(url => url.href).sort();
 
